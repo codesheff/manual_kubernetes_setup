@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-web-html
+data:
+  index.html: |
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Demo Web</title>
+        <style>
+          body { font-family: Arial, sans-serif; margin: 2rem; }
+          h1 { color: #1f4b99; }
+        </style>
+      </head>
+      <body>
+        <h1>Demo Web</h1>
+        <p>Served by nginx in Kubernetes.</p>
+      </body>
+    </html>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-web
+  template:
+    metadata:
+      labels:
+        app: demo-web
+    spec:
+      containers:
+        - name: demo-web
+          image: nginx:1.25-alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: html
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+      volumes:
+        - name: html
+          configMap:
+            name: demo-web-html
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-web
+spec:
+  type: LoadBalancer
+  selector:
+    app: demo-web
+  ports:
+    - port: 80
+      targetPort: 80
