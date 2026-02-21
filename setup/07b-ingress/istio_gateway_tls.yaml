@@ -162,6 +162,7 @@ spec:
     - name: app-gw
   hostnames:
     - "itosbl.com"
+    - "www.itosbl.com"
   rules:
     - backendRefs:
         - name: echo
@@ -209,6 +210,7 @@ spec:
     name: letsencrypt-prod
   dnsNames:
     - "itosbl.com"
+    - "www.itosbl.com"
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
