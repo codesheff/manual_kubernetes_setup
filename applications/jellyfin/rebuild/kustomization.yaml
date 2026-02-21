@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../../setup/09_storage/nfs-config-pv-pvc.yaml
+  - ../../../setup/09_storage/nfs-media-pv-pvc.yaml
+  - ../istio-jellyfin-lan-gateway.yaml
+  - ../istio-jellyfin-local-only.yaml

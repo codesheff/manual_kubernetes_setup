@@ -9,10 +9,13 @@ persistence:
     enabled: true
     size: 5Gi
     storageClass: ''
+    existingClaim: nfs-config-pvc
   media:
     enabled: true
+    type: pvc
     size: 100Gi
     storageClass: ''
+    existingClaim: nfs-media-pvc
 
 ingress:
   enabled: true
